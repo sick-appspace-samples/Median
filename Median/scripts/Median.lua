@@ -28,13 +28,13 @@ local DELAY = 1000 -- ms between visualization steps for demonstration purpose
 
 -- Creating viewer
 local viewer = View.create()
-viewer:setID('viewer2D')
 
 -- Setting up graphical overlay attributes
 
 local textDecoration = View.TextDecoration.create()
 textDecoration:setSize(50)
 textDecoration:setPosition(20, 50)
+textDecoration:setColor(0, 220, 0)
 
 --End of Global Scope-----------------------------------------------------------
 
@@ -43,7 +43,8 @@ textDecoration:setPosition(20, 50)
 local function main()
   local img = Image.load('resources/Median.bmp')
   viewer:clear()
-  viewer:addImage(img)
+  local imageID = viewer:addImage(img)
+  viewer:addText('Input image', textDecoration, nil, imageID)
   viewer:present()
   Script.sleep(DELAY) -- for demonstration purpose only
 
@@ -54,7 +55,7 @@ local function main()
   for i = minKernel, maxKernel, 2 do
     local img2 = img:median(i)
     viewer:clear()
-    local imageID = viewer:addImage(img2)
+    imageID = viewer:addImage(img2)
     viewer:addText('Kernel = ' .. i .. 'x' .. i, textDecoration, nil, imageID)
     viewer:present() -- presenting single steps
     Script.sleep(DELAY) -- for demonstration purpose only
